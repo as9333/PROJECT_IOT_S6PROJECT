@@ -1,0 +1,23 @@
+{% include'publicheader.html' %}
+	 <table border="3">
+  <tr>
+    <th>productid</th>
+    <th>productname</th>
+    <th>price</th>
+    <!-- <th>gender</th>
+    <th>Image</th> -->
+  </tr>
+  <tbody>
+    {% for row in data['viewreg'] %}
+    <tr>
+      <td>{{row['productid']}}</td>
+      <td>{{row['productname']}}</td>
+      <td>{{row['price']}}</td>
+      <!-- <td>{{row['gender']}}</td> -->
+      <!-- <td ><img  height="100" width="100" src="{{row['profile_pic']}}"> </td> -->
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% include 'publicfooter.html' %}

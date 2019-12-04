@@ -1,0 +1,23 @@
+{% include'adminheader.html' %}
+	 <table border="3">
+  <tr>
+    <th>name</th>
+    <th>address</th>
+    <th>phone number</th>
+    <th>gender</th>
+    <th>Image</th>
+  </tr>
+  <tbody>
+    {% for row in data['viewreg'] %}
+    <tr>
+      <td>{{row['name']}}</td>
+      <td>{{row['address']}}</td>
+      <td>{{row['phone number']}}</td>
+      <td>{{row['gender']}}</td>
+      <td ><img  height="100" width="100" src="{{row['profile_pic']}}"> </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% include 'adminfooter.html' %}
