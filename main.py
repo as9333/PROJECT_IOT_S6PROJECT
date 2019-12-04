@@ -1,5 +1,5 @@
 from flask import *
-from database import *
+# from database import *
 from public import public
 from admin import admin
 app = Flask(__name__)
