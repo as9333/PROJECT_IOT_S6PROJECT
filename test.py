@@ -1,6 +1,5 @@
-from flask import *
-from database  import *
-
+from flask import Flask, request, render_template
+from database import select 
 app = Flask(__name__)
 
 @app.route('/',methods=['get','post'])
