@@ -50,17 +50,17 @@ D16	Blue led on board
 D2	Blue led on board
 
 blynk_app_pin	api_pin
-D0  		D16 
-D1   		D5
-D2    		D4 
-D3 		D0
-D4   		D2
-D5   		D14
-D6   		D12 
-D7   		D13
-D8  		D15
-D9   		D3
-D10  		D1
+D0  		    D16 
+D1   		    D5
+D2    		    D4 
+D3 		        D0
+D4   		    D2
+D5   		    D14
+D6   		    D12 
+D7   		    D13
+D8  		    D15
+D9   		    D3
+D10  		    D1
 
 
 
