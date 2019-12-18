@@ -34,5 +34,10 @@ http://blynk-cloud.com/lOQoVl4dE2x_Gqim7qU-iLAfhpqRPbQs/get/D2 (check status of 
 
 http://blynk-cloud.com/lOQoVl4dE2x_Gqim7qU-iLAfhpqRPbQs/get/D0 (check status of pin D0 (gp0) is on or off, Returns '1' if off or '0' if on  ) 
 
+API to check device connected or not
+
+http://blynk-cloud.com/auth_token/isHardwareConnected
+returns true or false
+
 
 
