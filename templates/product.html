@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>product</title>
+</head>
+<body>
+	<form method="POST" enctype="multipart/form-data">
+		<center>
+			<table>
+				<tr><h1>product details</h1></tr>
+          <tr>
+            <td>Enter productname:</td>
+            <td><input type="text" name="productname"></td>
+            
+          </tr>
+          <tr>
+            <td>Enter Price:</td>
+            <td><input type="text" name="price"></td>
+            
+          <!-- </tr>
+  				
+            <tr>
+            <td> product picture:</td>
+            <td><input type="file" name="productpic"></td>
+            
+          </tr> -->
+			</table>
+		
+			<center>
+  			<input type="submit" name="submit" value="submit">
+  			</center> 
+		</center>
+    <table>
+  <tr>
+    <th>productid</th>
+    <th>productname</th>
+    <th>price</th>
+    <th>Image</th>
+  </tr>
+  <tbody>
+    {% for row in data['viewproductdetails'] %}
+    <tr>
+      <td>{{row['productid']}}</td>
+      <td>{{row['productname']}}</td>
+      <td>{{row['price']}}</td>
+      <td ><img  height="100" width="100" src="{{row['product_pic']}}"> </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+
+	</form>
+
+</body>
+</html>
