@@ -35,4 +35,47 @@ http://blynk-cloud.com/lOQoVl4dE2x_Gqim7qU-iLAfhpqRPbQs/get/D2 (check status of 
 http://blynk-cloud.com/lOQoVl4dE2x_Gqim7qU-iLAfhpqRPbQs/get/D0 (check status of pin D0 (gp0) is on or off, Returns '1' if off or '0' if on  ) 
 
 
+api and blynk api pin corections
+
+blynk_app_pin	api_pin
+D2		D4
+D1		D5
+D6		D12
+D7		D13
+D5		D14
+
+
+
+D16	Blue led on board
+D2	Blue led on board
+
+blynk_app_pin	api_pin
+D0  		D16 
+D1   		D5
+D2    		D4 
+D3 		D0
+D4   		D2
+D5   		D14
+D6   		D12 
+D7   		D13
+D8  		D15
+D9   		D3
+D10  		D1
+
+
+
+
+
+
+
+
+=======
+API to check device connected or not
+
+http://blynk-cloud.com/auth_token/isHardwareConnected
+returns true or false
+
+
+
+
 
