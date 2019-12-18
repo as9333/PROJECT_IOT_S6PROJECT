@@ -1,6 +1,7 @@
 from flask import *
-# from database  import *
+from database  import *
 import uuid
+import requests
 
 public=Blueprint('public',__name__)
 
@@ -10,14 +11,19 @@ def home():
 	return render_template('publichome.html')
 
 
-@public.route('viewproduct',methods=['post','get'])
-def view():
-	data={}
-	q="select * from producttable"
-	result=select(q)
-	data['viewreg']=result
-	return render_template('viewproduct.html',data=data)
+@public.route('/controlpanel',methods=['post','get'])
+def controlpanel():
 
+	return render_template('ctrlpanel.html')
+#     if request.method == 'POST':
+#         if request.form.get('btn') == 'on':
+#             return requests.get('http://blynk-cloud.com/8l5Nb4p_bbiGynNwHUV9TmjHX7ZHVZac/update/D1?value=0').content
+#         # elif request.form['submit_button'] == 'Do Something Else':
+#         #     pass # do something else
+#         else:
+#             pass # unknown
+#     elif request.method == 'GET':
+    
 
 @public.route('/',methods=['get','post'])
 def login():
@@ -33,7 +39,8 @@ def login():
 			if res[0]['usertype']=="admin":
 				return redirect(url_for("admin.home"))
 			elif res[0]['usertype']=="user":
-				return redirect(url_for("public.home"))
+				 return redirect(url_for("public.controlpanel"))
+				# return render_template('ctrlpanel.html')
 
 	return render_template("login.html")
 

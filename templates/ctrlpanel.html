@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>SMART SWITCH CONTROL PANEL</title>
+	</head>
+
+	<body>
+		<center>
+			<h1>SMART SWITCH CONTROL PANEL</h1>
+		</center>
+		<br>
+		<br>
+		<br>
+		<form method="POST" enctype="multipart/form-data">
+			<center>
+		
+				<table>
+				
+				
+          			<tr>
+            			<td>BUTTON 1<input type="checkbox" name="button1" id="btn1" value="on" onclick='changeState()'></td>
+            			<td>BUTTON 2<input type="checkbox" name="button2" id="btn2"></td>    
+          			</tr>
+
+          			<tr>
+            			<td>BUTTON 3<input type="checkbox" name="button3" id="btn3"></td>
+            			<td>BUTTON 4<input type="checkbox" name="button4" id="btn4"></td>    
+          			</tr>
+  				
+            
+  				
+				</table>
+
+			</center>
+
+			<script>
+				var states = ["ON","OFF"], // your possible states
+                        current_state = 0; // your flag
+
+							function changeState() 
+							{
+                              current_state=!current_state; // switch
+							  document.getElementById('btn1').value=states[current_state?1:0]; // write your state
+								//   window.alert("value changed to "+current_state);
+
+							  if(current_state==1)
+							  {
+								window.alert("value changed to ON");
+								httpGet(theUrl);
+							  }
+
+							  else if(current_state==0)
+							  {
+								window.alert("value changed to OFF");
+								httpGet(theUrl);
+							  }
+							}
+							
+
+							function httpGet(theUrl)
+							{
+   								var xmlHttp = new XMLHttpRequest();
+    							xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+    							xmlHttp.send( null );
+    							return xmlHttp.responseText;
+							}			
+			</script>
+
+		</form>	
+
+	</body>
+</html>

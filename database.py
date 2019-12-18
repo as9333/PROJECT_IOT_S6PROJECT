@@ -1,7 +1,7 @@
 import mysql.connector
 
 password=""
-database = "test"
+database = "smart_switch"
 def select(q):
 	cnx = mysql.connector.connect(user="root", password=password, host="localhost", database=database)
 	cur = cnx.cursor(dictionary=True)
