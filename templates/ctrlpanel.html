@@ -41,13 +41,14 @@
 				var btn4_status
 				var btn_status
 				
-
+				
 				window.onload = function () 
-								{
+								{		
     								checkonoff("D5");
 									checkonoff("D4");
 									checkonoff("D0");
 									checkonoff("D2");
+									check_device_online();
 									//button_status_startup();
 									//console.log("Entered the window onload");
 								};
@@ -242,7 +243,7 @@
  									}
 									 //
 									 //console.log(request)
-									 console.log("btn_status inside the nested function: "+btn_status)
+									 //console.log("btn_status inside the nested function: "+btn_status)
 									 //return btn_status;
 
 									//I DONT KNOW ANY ANOTHER METHOD PLEASE COORPORATE 
@@ -284,11 +285,11 @@
 
 							setTimeout(function()  
 											{
-												console.log("Called the button_status_startup")
-												console.log("button D5 "+btn1_status)
-												console.log("button D4 "+btn2_status)
-												console.log("button D0 "+btn3_status)
-												console.log("button D2 "+btn4_status)
+												//console.log("Called the button_status_startup")
+												// console.log("button D5 "+btn1_status)
+												// console.log("button D4 "+btn2_status)
+												// console.log("button D0 "+btn3_status)
+												// console.log("button D2 "+btn4_status)
 												if(btn1_status == 0)
 												{
 													document.getElementById('btn1').checked = true;
@@ -327,9 +328,73 @@
 								var url = "http://blynk-cloud.com/"+auth_code+"/update/"+pin+"?value=1";
    								var xmlHttp = new XMLHttpRequest();
     							xmlHttp.open( "GET", url, true ); // false for synchronous request
-    							xmlHttp.send( null );
+								xmlHttp.send( null );
     							return xmlHttp.responseText;
-							}					
+							}	
+							
+							function check_device_online()
+							{
+								var url = "http://blynk-cloud.com/"+auth_code+"/isHardwareConnected";
+   								var xmlHttp = new XMLHttpRequest();
+    							xmlHttp.open( "GET", url, false ); // false for synchronous request
+								//xmlHttp.setRequestHeader("Content-type", "application/json;charset=utf-8");
+								xmlHttp.send();
+								//alert(xmlHttp.responseText);
+								//return xmlHttp.responseText;
+								console.log(xmlHttp)
+								console.log(xmlHttp.response);
+
+										if(xmlHttp.response == "false")
+										{
+											//document.write("<center><h1>Device is OFFLINE</h1></center>");
+											window.alert("Device is OFFLINE");
+											
+										}
+
+										else if(xmlHttp.response == "true")
+										{
+											//document.write("<center><h1>Device is ONLINE</h1></center>");
+											window.alert("Device is ONLINE");
+											
+										}
+							}	 
+
+							// function check_device_online()
+							// {
+							// 	console.log("Entered the check_device_online fn");
+							// 	var request1 = new XMLHttpRequest()
+							// 	var url = "http://blynk-cloud.com/"+auth_code+"/isHardwareConnected";
+							// 	console.log(url)
+
+							// 	request1.open('GET', url, false)
+								
+							// 	request1.onload = function() 
+							// 	{	
+							// 		console.log("value of data1"+data1)
+  							// 		// Begin accessing JSON data here
+							// 		  var data1 = JSON.parse(this.response)
+									  
+
+ 							// 		if (request1.status >= 200 && request1.status < 400) 
+							// 		{	
+							// 			document.write("<center><h1>Entered check_device_online fn</h1></center>");
+										
+										
+							// 			if(request1.response == "false")
+							// 			{
+							// 				document.write("<center><h1>Device is OFFLINE</h1></center>");
+											
+							// 			}
+
+							// 			else if(request1.response == "true")
+							// 			{
+							// 				document.write("<center><h1>Device is ONLINE</h1></center>");
+											
+							// 			}
+							// 		}
+							// 	}
+							// 	console.log("Reached line 369")	
+							// }
 			</script>
 
 		</form>	
