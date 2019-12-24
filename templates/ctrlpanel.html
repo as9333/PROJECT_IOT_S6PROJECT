@@ -56,28 +56,134 @@
 							
 							auth_code = "4LrnMs0PkPlgyC6GDKrzBJYLdDZDjmfi";
 
+							var states = ["ON","OFF"]; // your possible states
+							//current_state = 1; // your flag
+
+							// current_state_for_btn1 = 1;  
+							// current_state_for_btn2 = 1;
+							// current_state_for_btn3 = 1;
+							// current_state_for_btn4 = 1;
+
 							function changeState(btn) 
 							{
 								
-							var states = ["ON","OFF"], // your possible states
-                        	current_state = 0; // your flag
-                              current_state=!current_state; // switch
-							  document.getElementById(btn).value=states[current_state?1:0]; // write your state
+							
+							// console.log("Current_state before: "+current_state);
+							// current_state=!current_state; // switch
+							// console.log("Current_state after //switch: "+current_state);
+							// document.getElementById('btn3').value=states[current_state?1:0]; // write your state
+							// console.log("Current value of button:"+btn+" is "+ document.getElementById(btn).value);
 								//   window.alert("value changed to "+current_state);
 
-							  if(current_state==1)
-							  {
-								//document.getElementById('btn1').checked = true;
-								window.alert("value changed to ON");
-								//httpGet(theUrl);
-							  }
 
-							  else if(current_state==0)
-							  {
-								//document.getElementById('btn1').checked = false;
-								window.alert("value changed to OFF");
-								//httpGet(theUrl);
-							  }
+							switch(btn)	  //this switch status allows us to get the current on or off value of buttons and also check them
+							{	
+								case 'btn1':
+									
+									console.log("old status of button: "+btn+"is:"+btn1_status);
+									console.log("Current_state before: "+btn1_status);
+									btn1_status=!btn1_status; // switch
+									console.log("Current_state after //switch: "+btn1_status);
+									document.getElementById(btn).value=states[btn1_status?1:0]; // write your state
+									console.log("Current value of button:"+btn+" is "+ document.getElementById(btn).value);
+									
+									if(document.getElementById(btn).value == "ON")
+									{
+										pin_on("D5");
+									}
+
+									else if(document.getElementById(btn).value == "OFF")
+									{
+										pin_off("D5");
+									}
+									
+
+									break;
+
+								case 'btn2':
+									
+									console.log("old status of button: "+btn+"is:"+btn2_status);
+									console.log("Current_state before: "+btn2_status);
+									btn2_status=!btn2_status; // switch
+									console.log("Current_state after //switch: "+btn2_status);
+									document.getElementById(btn).value=states[btn2_status?1:0]; // write your state
+									console.log("Current value of button:"+btn+" is "+ document.getElementById(btn).value);
+
+									if(document.getElementById(btn).value == "ON")
+									{
+										pin_on("D4");
+									}
+
+									else if(document.getElementById(btn).value == "OFF")
+									{
+										pin_off("D4");
+									}
+									
+									
+									break;	
+
+								case 'btn3':
+									
+									console.log("old status of button: "+btn+"is:"+btn3_status);
+									console.log("Current_state before: "+btn3_status);
+									btn3_status=!btn3_status; // switch
+									console.log("Current_state after //switch: "+btn3_status);
+									document.getElementById(btn).value=states[btn3_status?1:0]; // write your state
+									console.log("Current value of button:"+btn+" is "+ document.getElementById(btn).value);
+
+									if(document.getElementById(btn).value == "ON")
+									{
+										pin_on("D0");
+									}
+
+									else if(document.getElementById(btn).value == "OFF")
+									{
+										pin_off("D0");
+									}
+
+									break;
+
+								case 'btn4':
+
+									console.log("old status of button: "+btn+"is:"+btn4_status);
+									console.log("Current_state before: "+btn4_status);
+									btn4_status=!btn4_status; // switch
+									console.log("Current_state after //switch: "+btn4_status);
+									document.getElementById(btn).value=states[btn4_status?1:0]; // write your state
+									console.log("Current value of button:"+btn+" is "+ document.getElementById(btn).value);
+
+									if(document.getElementById(btn).value == "ON")
+									{
+										pin_on("D2");
+									}
+
+									else if(document.getElementById(btn).value == "OFF")
+									{
+										pin_off("D2");
+									}
+									
+									break;
+								
+								default:
+												console.log("Entered Switch statement in line 103 and passed btn value is: "+btn);
+							}
+
+
+							//   if(current_state==0)
+							//   {
+							// 	//document.getElementById('btn1').checked = true;
+							// 	window.alert("value changed to ON and currently passed button id="+btn);
+							// 	//httpGet(theUrl);
+								
+							//   }
+
+							//   else if(current_state==1)
+							//   {
+							// 	//document.getElementById('btn1').checked = false;
+							// 	window.alert("value changed to OFF and currently passed button id="+btn);
+							// 	//httpGet(theUrl);
+								
+							//   }
 							}
 
 							
@@ -186,21 +292,25 @@
 												if(btn1_status == 0)
 												{
 													document.getElementById('btn1').checked = true;
+													
 												}
 												if(btn2_status == 0)
 												{
 													document.getElementById('btn2').checked = true;
+													
 												}
 												if(btn3_status == 0)
 												{
 													document.getElementById('btn3').checked = true;
+													
 												}
 												if(btn4_status == 0)
 												{
 													document.getElementById('btn4').checked = true;
+													
 												}
 
-											},250);	
+											},450);	
 							
 
 							function pin_on(pin)
