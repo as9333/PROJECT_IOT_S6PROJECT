@@ -317,7 +317,7 @@
 							{
 								var url = "http://blynk-cloud.com/"+auth_code+"/update/"+pin+"?value=0";
    								var xmlHttp = new XMLHttpRequest();
-    							xmlHttp.open( "GET", url, false ); // false for synchronous request
+    							xmlHttp.open( "GET", url, true ); // false for synchronous request
     							xmlHttp.send( null );
     							return xmlHttp.responseText;
 							}	
@@ -326,7 +326,7 @@
 							{
 								var url = "http://blynk-cloud.com/"+auth_code+"/update/"+pin+"?value=1";
    								var xmlHttp = new XMLHttpRequest();
-    							xmlHttp.open( "GET", url, false ); // false for synchronous request
+    							xmlHttp.open( "GET", url, true ); // false for synchronous request
     							xmlHttp.send( null );
     							return xmlHttp.responseText;
 							}					
