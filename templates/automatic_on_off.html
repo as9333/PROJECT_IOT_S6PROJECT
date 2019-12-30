@@ -1,0 +1,48 @@
+{% include 'publicheader.html' %}
+{% include 'cssstyle.html' %}
+
+<body>
+    <form method="POST">
+    <center>
+        <table>
+            <tr>
+                <td><h3>FROM</h3>
+                    
+                    <input type="time" name="from_time" required="">
+                        
+                    
+                </td> 
+
+                <td><h3>TO</h3>
+                    <input type="time" name="to_time" required="">
+                </td> 
+                
+                <td><h3>SELECT BUTTON TO SWITCH</h3>
+                    <select name="button" required>
+                        <option value="" selected disabled hidden>SELECT BUTTON</option>
+                        <option value="D5">BUTTON 1</option>
+                        <option value="D4">BUTTON 2</option>
+                        <option value="D0">BUTTON 3</option>
+                        <option value="D2">BUTTON 4</option>
+                      </select>
+                </td>
+
+                <td><h3>ON/OFF</h3>
+                    <br>
+                    
+                    <select name="status" required>
+                        <option value="" selected disabled hidden>SELECT ON/OFF</option>
+                        <option value="ON">ON</option>
+                        <option value="OFF">OFF</option>
+                      </select>
+                </td>
+            </tr>
+        </table>
+
+        <center>
+            <input type="submit" name="submit" value="submit">
+        </center>
+        
+    </center>
+    </form>
+</body>

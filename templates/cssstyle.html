@@ -1,0 +1,218 @@
+<html>
+<head>
+<style>
+/* The switch - the box around the slider */
+.submit 
+{
+  background-color: #5c7080; 
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+  }
+  
+  /* Hide default HTML checkbox */
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  /* The slider */
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  input:checked + .slider {
+    background-color: #2196F3;
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+  
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
+
+  body
+	{
+		background-color:#182026;
+		/* background-color: rgb(7, 30, 92); */
+		/* color: white; */
+	}
+
+	h3
+	{
+		color: white;
+		font-family: myFirstFont;
+	}
+
+	h1
+	{
+		color: white;
+		font-family: myFirstFont;
+  }
+
+  a 
+  {
+    color: white;
+    font-size: 20px;
+    text-decoration: none;
+  }
+
+  input[type=time] {
+  border: none;
+  color: #2a2c2d;
+  font-size: 14px;
+  font-family: helvetica;
+  width: 160px;
+}
+
+/* Wrapper around the hour, minute, second, and am/pm fields as well as 
+the up and down buttons and the 'X' button */
+input[type=time]::-webkit-datetime-edit-fields-wrapper {
+  display: flex;
+  background-color: #182026;
+}
+
+/* The space between the fields - between hour and minute, the minute and 
+second, second and am/pm */
+input[type=time]::-webkit-datetime-edit-text {
+  padding: 19px 4px;
+  background-color: #182026;
+}
+
+/* The naming convention for the hour, minute, second, and am/pm field is
+`-webkit-datetime-edit-{field}-field` */
+
+/* Hour */
+input[type=time]::-webkit-datetime-edit-hour-field {
+  background-color: #5c7080;                                             /* MAIN HEADER COLOUR */
+  border-radius: 15%;
+  padding: 19px 13px;
+  color: #fff;
+}
+
+/* Minute */
+input[type=time]::-webkit-datetime-edit-minute-field {
+  background-color: #5c7080;
+  border-radius: 15%;
+  padding: 19px 13px;
+  color: #fff;
+}
+
+/* AM/PM */
+input[type=time]::-webkit-datetime-edit-ampm-field {
+  background-color: #5c7080;
+  border-radius: 15%;
+  color: #fff;
+  padding: 19px 13px;
+}
+
+/* 'X' button for resetting/clearing time */
+input[type=time]::-webkit-clear-button {
+  display: none;
+}
+
+/* Up/Down arrows for incrementing/decrementing the value */
+input[type=time]::-webkit-inner-spin-button {
+  display: none;
+}
+
+table
+{ 
+	border-collapse:separate; 
+	border-spacing: 0 50px; 
+} 
+
+th,td
+{ 
+	width: 200px; 
+	text-align: center; 
+		/* border: 1px solid black;  */
+	padding: 20px;
+}
+
+select 
+{
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -webkit-padding-end: 20px;
+    -moz-padding-end: 20px;
+    -webkit-padding-start: 2px;
+    -moz-padding-start: 2px;
+    background-color: #5c7080; /* Fallback color if gradients are not supported */
+    background-image: url(../images/select-arrow.png), -webkit-linear-gradient(top, #E5E5E5, #F4F4F4); /* For Chrome and Safari */
+    background-image: url(../images/select-arrow.png), -moz-linear-gradient(top, #E5E5E5, #F4F4F4); /* For old Firefox (3.6 to 15) */
+    background-image: url(../images/select-arrow.png), -ms-linear-gradient(top, #E5E5E5, #F4F4F4); /* For pre-releases of Internet Explorer  10*/
+    background-image: url(../images/select-arrow.png), -o-linear-gradient(top, #E5E5E5, #F4F4F4); /* For old Opera (11.1 to 12.0) */
+    background-image: url(../images/select-arrow.png), linear-gradient(to bottom, #E5E5E5, #F4F4F4); /* Standard syntax; must be last */
+    background-position: center right;
+    background-repeat: no-repeat;
+    border: 1px solid rgb(255, 255, 255);
+    border-radius: 2px;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+    color: rgb(10, 10, 10);
+    font-size: inherit;
+    margin: 0;
+    overflow: hidden;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+select option:first-child
+{
+  color: #5c7080;
+  background-color: #5c7080;
+} 
+
+
+  </style>
+  </head>
+  </html>

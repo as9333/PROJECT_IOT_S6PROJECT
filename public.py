@@ -2,19 +2,37 @@ from flask import *
 from database  import *
 import uuid
 import requests
+import schedule  #pip install schedule
+import time
 
 public=Blueprint('public',__name__)
 
-@public.route('/home',methods=['post','get'])
+# @public.route('/jsfunctions',methods=['post','get'])
+def pin_on():
+	print("Entered fn pin_on")
+	# return render_template('jsfunctions.html')
+	return "Entered fn pin_on"
+
+
+@public.route('/login',methods=['post','get'])
 def home():
 
-	return render_template('publichome.html')
+	return redirect(url_for("public.login"))
+
+@public.route('/logout',methods=['post','get'])
+def logout():
+
+	session['logged_in'] = False
+	return redirect(url_for("public.login"))
 
 
 @public.route('/controlpanel',methods=['post','get'])
 def controlpanel():
 
-	return render_template('ctrlpanel.html')
+	if not session.get('logged_in'):
+		return redirect(url_for("public.login"))
+	else:	
+		return render_template('ctrlpanel.html')
 #     if request.method == 'POST':
 #         if request.form.get('btn') == 'on':
 #             return requests.get('http://blynk-cloud.com/8l5Nb4p_bbiGynNwHUV9TmjHX7ZHVZac/update/D1?value=0').content
@@ -37,12 +55,20 @@ def login():
 
 		if res:
 			if res[0]['usertype']=="admin":
+				session['logged_in'] = True
 				return redirect(url_for("admin.home"))
+				
 			elif res[0]['usertype']=="user":
+				 session['logged_in'] = True
 				 return redirect(url_for("public.controlpanel"))
 				# return render_template('ctrlpanel.html')
+		else:
+			# return redirect(url_for("public.login"))
+			return "<script>window.alert('WRONG CREDENTIALS');window.location.replace('/');</script>"
+			
 
 	return render_template("login.html")
+	# return render_template("Login_v14/index.html")
 
 
 @public.route('/registration',methods=['get','post'])
@@ -73,3 +99,28 @@ def registration():
 	data['viewreg']=result
 	return render_template("reg.html",data=data)
 
+@public.route('/automatic_on_off',methods=['post','get'])
+def automatic_on_off():
+
+	# if not session.get('logged_in'):
+	# 	return redirect(url_for("public.login"))
+	# else:	
+		# return render_template('automatic_on_off.html')
+
+	if 'submit' in request.form:
+		from_time=request.form['from_time']	
+		to_time=request.form['to_time']
+		button=request.form['button']
+		status=request.form['status']
+		# print("from_time", file=sys.stderr)
+		# print('enter getJSONReuslt', flush=True)
+		print("From_time=",from_time)
+		print("to_time=",to_time)
+		print("button=",button)
+		print("status=",status)
+		pin_on()
+
+	if not session.get('logged_in'):
+		return redirect(url_for("public.login"))
+	else:	
+		return render_template('automatic_on_off.html')

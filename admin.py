@@ -8,7 +8,11 @@ admin=Blueprint('admin',__name__)
 @admin.route('home',methods=['post','get'])
 def home():
 
-	return render_template('adminhome.html')
+	if not session.get('logged_in'):
+		return redirect(url_for("public.login"))
+	else:	
+		return render_template('adminhome.html')
+
 @admin.route('view',methods=['post','get'])
 def view():
 	data={}
