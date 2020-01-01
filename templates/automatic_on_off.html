@@ -42,6 +42,35 @@
         <center>
             <input type="submit" name="submit" value="submit">
         </center>
+        <br>
+        <br>
+        <br>
+        <br>
+
+        <h1>EXISTING JOBS</h1>
+        <table>
+            <tr>
+              <th>ID</th>
+              <th>FROM_TIME</th>
+              <th>TO_TIME</th>
+              <th>BUTTON</th>
+              <th>STATUS</th>
+              
+            </tr>
+        
+          {% for row in output_data %}
+            <tr>
+              <td>{{row[0]}}</td>
+              <td>{{row[1]}}</td>
+              <td>{{row[2]}}</td>
+              <td>{{row[3]}}</td>
+              <td>{{row[4]}}</td>       
+            </tr>
+          {% endfor %}
+        </table>
+
+        
+        <a href="/delete_jobs">DELETE JOBS</a>
         
     </center>
     </form>

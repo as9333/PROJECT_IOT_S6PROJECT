@@ -31,20 +31,20 @@
   			</center> 
 		</center>
     <table>
-  <tr>
-    <th>productid</th>
-    <th>productname</th>
-    <th>price</th>
-    <th>Image</th>
-  </tr>
+      <tr>
+        <th>productid</th>
+        <th>productname</th>
+        <th>price</th>
+        <th>Image</th>
+      </tr>
   <tbody>
     {% for row in data['viewproductdetails'] %}
-    <tr>
-      <td>{{row['productid']}}</td>
-      <td>{{row['productname']}}</td>
-      <td>{{row['price']}}</td>
-      <td ><img  height="100" width="100" src="{{row['product_pic']}}"> </td>
-    </tr>
+      <tr>
+        <td>{{row['productid']}}</td>
+        <td>{{row['productname']}}</td>
+        <td>{{row['price']}}</td>
+        <td ><img  height="100" width="100" src="{{row['product_pic']}}"> </td>
+      </tr>
     {% endfor %}
   </tbody>
 

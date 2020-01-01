@@ -1,0 +1,40 @@
+{% include 'publicheader.html' %}
+{% include 'cssstyle.html' %}
+
+<html>
+    <body>
+        <form method="POST">
+
+            <center>
+
+                <h1>EXISTING JOBS</h1>
+                <table>
+                    <tr>
+                    <th>ID</th>
+                    <th>FROM_TIME</th>
+                    <th>TO_TIME</th>
+                    <th>BUTTON</th>
+                    <th>STATUS</th>
+                    
+                    </tr>
+        
+                {% for row in output_data %}
+                    <tr>
+                    <td>{{row[0]}}</td>
+                    <td>{{row[1]}}</td>
+                    <td>{{row[2]}}</td>
+                    <td>{{row[3]}}</td>
+                    <td>{{row[4]}}</td>       
+                    </tr>
+                {% endfor %}
+                </table>
+
+                <h3>TO Delete Job:</h3><input type="number" name="job_id" placeholder="ENTER ID">
+                <input type="submit" name="submit" value="submit">
+
+            </center>
+
+        </form>
+
+    </body>
+</html>
