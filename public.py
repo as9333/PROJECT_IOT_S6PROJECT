@@ -172,3 +172,15 @@ def delete_jobs():
 		mycursor.execute('SELECT * FROM automatic_jobs')
 		data=mycursor.fetchall()	
 		return render_template('delete_jobs.html',output_data=data)
+
+# @app.before_first_request
+# def check_db_for_jobs():
+#     mycursor.execute('SELECT * FROM automatic_jobs')
+#     print("Entered check_db_for_jobs function")
+#     print(mycursor.fetchall())
+
+# schedule.every(1).minutes.do(check_db_for_jobs)
+
+# while True:
+#     schedule.run_pending()
+#     time.sleep(1)
