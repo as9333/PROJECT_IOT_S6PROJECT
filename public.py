@@ -9,11 +9,11 @@ import mysql.connector
 
 public=Blueprint('public',__name__)
 
-mydatabase = mysql.connector.connect(
-    host = 'localhost', user = 'root',
-    passwd = '', database = 'smart_switch')
+# mydatabase = mysql.connector.connect(
+#     host = 'localhost', user = 'root',
+#     passwd = '', database = 'smart_switch')
 
-mycursor = mydatabase.cursor()
+# mycursor = mydatabase.cursor()
 
 # @public.route('/jsfunctions',methods=['post','get'])
 # def pin_on():
@@ -109,6 +109,13 @@ def registration():
 
 @public.route('/automatic_on_off',methods=['post','get'])
 def automatic_on_off():
+
+	mydatabase = mysql.connector.connect(
+    	host = 'localhost', user = 'root',
+    	passwd = '', database = 'smart_switch')
+
+	mycursor = mydatabase.cursor()
+
 	# data={}
 	# if not session.get('logged_in'):
 	# 	return redirect(url_for("public.login"))
@@ -152,6 +159,7 @@ def automatic_on_off():
 	else:	
 		mycursor.execute('SELECT * FROM automatic_jobs')
 		data=mycursor.fetchall()
+		mydatabase.close()
 		# cur = con.cursor()
 		# cur.execute("SELECT * FROM automatic_jobs")
 		# data = cur.fetchall()
@@ -160,17 +168,34 @@ def automatic_on_off():
 @public.route('/delete_jobs',methods=['post','get'])
 def delete_jobs():
 
+	mydatabase = mysql.connector.connect(
+    	host = 'localhost', user = 'root',
+    	passwd = '', database = 'smart_switch')
+
+	mycursor = mydatabase.cursor()
+
 	if 'submit' in request.form:
 		job_id=request.form['job_id']
 		print("job_id to delete=",job_id)	
-		query="DELETE FROM `automatic_jobs` WHERE `automatic_jobs`.`JOB_ID` = %s"
-		mycursor.execute(query,(job_id,))
+		# query="DELETE FROM `automatic_jobs` WHERE `automatic_jobs`.`JOB_ID` = %s"
+
+		q="DELETE FROM `automatic_jobs` WHERE `automatic_jobs`.`JOB_ID` = %s"%(job_id)
+		delete(q)
+
+		query="ALTER TABLE `automatic_jobs` ORDER BY `JOB_ID` ASC;"
+		mycursor.execute(query)
+		mydatabase.commit()
+		# mydatabase.close()
+
+		# query1="SELECT * FROM 'automatic_jobs'"
+		# mycursor.execute(query1)
 		
 	if not session.get('logged_in'):
 		return redirect(url_for("public.login"))
 	else:	
 		mycursor.execute('SELECT * FROM automatic_jobs')
-		data=mycursor.fetchall()	
+		data=mycursor.fetchall()
+		mydatabase.close()	
 		return render_template('delete_jobs.html',output_data=data)
 
 # @app.before_first_request

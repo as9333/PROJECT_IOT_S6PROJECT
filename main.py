@@ -11,15 +11,21 @@ import threading
 import pyduktape #pip install pyduktape, also download
 app = Flask(__name__)
 
-mydatabase = mysql.connector.connect(
-    host = 'localhost', user = 'root',
-    passwd = '', database = 'smart_switch')
+# mydatabase = mysql.connector.connect(
+#     host = 'localhost', user = 'root',
+#     passwd = '', database = 'smart_switch')
 
-mycursor = mydatabase.cursor()
+# mycursor = mydatabase.cursor()
 final=[]
 
 def check_db_for_jobs():
-    
+
+    mydatabase = mysql.connector.connect(
+    	host = 'localhost', user = 'root',
+    	passwd = '', database = 'smart_switch')
+
+	
+    mycursor = mydatabase.cursor()
     global run_once
     # print("Current run_once value on running before if condition=", run_once)
     global jobs_original
@@ -29,13 +35,16 @@ def check_db_for_jobs():
     if run_once == 0:                                                                       #This if condition is used to assign initial value to jobs_original variable otherwise error apperas
         mycursor.execute('SELECT from_time, to_time, status, relay FROM automatic_jobs')
         jobs_original = mycursor.fetchall()
+        # mydatabase.close()
         run_once = 1
 
     # print("Current run_once value running after if condition=", run_once)
     mycursor.execute('SELECT from_time, to_time, status, relay FROM automatic_jobs')
+    
     # print("Entered check_db_for_jobs function")
     # print(mycursor.fetchall())          #DO NOT CALL FETCHALL TWICE NOT WORK
     jobs = mycursor.fetchall()
+    mydatabase.close()
     
     if jobs != jobs_original:
 
