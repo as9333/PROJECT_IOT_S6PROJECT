@@ -1,5 +1,6 @@
 from flask import *
 from database  import *
+import globals #importing globals.py file values for job_id_to_delete
 import uuid
 import requests
 import schedule  #pip install schedule
@@ -128,6 +129,8 @@ def automatic_on_off():
 		relay=request.form['button']
 		status=request.form['status']
 
+		# if from_time < to_time:
+
 		if relay == 'D5':                      #for seleting relay and also outputing the exixting jobs
 			button='button 1'
 		if relay == 'D4':
@@ -146,6 +149,11 @@ def automatic_on_off():
 		q="INSERT INTO `automatic_jobs` VALUES (0,'%s','%s','%s','%s','%s')"%(from_time,to_time,button,status,relay)
 		id=insert(q)
 		print("id=",id)
+
+		# else:
+		# 	print("from_time greater than to__time")
+		# 	return "<script>window.alert('FROM TIME CANNOT BE GREATER THAN OR EQUAL TO TO TIME');window.location.replace('/automatic_on_off');</script>"	
+
 
 	# host='localhost'
     # user=
@@ -167,7 +175,7 @@ def automatic_on_off():
 
 @public.route('/delete_jobs',methods=['post','get'])
 def delete_jobs():
-
+	
 	mydatabase = mysql.connector.connect(
     	host = 'localhost', user = 'root',
     	passwd = '', database = 'smart_switch')
@@ -176,6 +184,7 @@ def delete_jobs():
 
 	if 'submit' in request.form:
 		job_id=request.form['job_id']
+		globals.job_id_to_delete=job_id
 		print("job_id to delete=",job_id)	
 		# query="DELETE FROM `automatic_jobs` WHERE `automatic_jobs`.`JOB_ID` = %s"
 

@@ -1,0 +1,1 @@
+global job_id_to_delete

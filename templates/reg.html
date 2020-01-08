@@ -1,52 +1,32 @@
+{% include 'adminheader.html' %}
+{% include 'cssstyle.html' %}
 <!DOCTYPE html>
 <html>
 <head>
 	<title>registration</title>
 </head>
 <body>
-	<form method="POST" enctype="multipart/form-data">
+	<form method="POST">
 		<center>
 			<table>
-				<tr><h1>reg form</h1></tr>
-				<tr>
-    				<td>Enter name:</td>
-    				<td><input type="text" name="name"></td>
-    				
-  				</tr>
-          <tr>
+				<tr><h1>ADD USER</h1></tr>
+				
+        
+        <tr>
             <td>Enter Username:</td>
-            <td><input type="text" name="username"></td>
+            <td><input type="text" name="username" required=""></td>
             
-          </tr>
-          <tr>
-            <td>Enter Password:</td>
-            <td><input type="text" name="pass"></td>
-            
-          </tr>
-  				<tr>
-  					<td>Enter address:</td>
-    				<td><input type="text" name="address"></td>
-    				
-  				</tr>
-            <tr>
-            <td>Enter phone number:</td>
-            <td><input type="text" name="phone_number"></td>
-            
-          </tr>
-  				 <tr>
-            <td>Enter gender:</td>
-            <td>
-              <input type="radio" name="gender" value="male">male
-              <input type="radio" name="gender" value="female">female
-            </td>
-          </tr>
+        </tr>
 
-          </tr>
-            <tr>
-            <td>Set profile picture:</td>
-            <td><input type="file" name="profile_pic"></td>
+        <tr>
+            <td>Enter Password:</td>
+            <td><input type="password" name="pass" required=""></td>
             
-          </tr>
+        </tr>
+
+  		
+             				         
+           
 			</table>
 		
 			<center>

@@ -2,6 +2,7 @@ from flask import *
 from database import *
 from public import public
 from admin import admin
+import globals #importing globals.py file values for job_id_to_delete
 import requests
 import os
 import mysql.connector
@@ -19,7 +20,7 @@ app = Flask(__name__)
 final=[]
 
 def check_db_for_jobs():
-
+    # global job_id_to_delete
     mydatabase = mysql.connector.connect(
     	host = 'localhost', user = 'root',
     	passwd = '', database = 'smart_switch')
@@ -33,14 +34,16 @@ def check_db_for_jobs():
     global jobs_row
 
     if run_once == 0:                                                                       #This if condition is used to assign initial value to jobs_original variable otherwise error apperas
-        mycursor.execute('SELECT from_time, to_time, status, relay FROM automatic_jobs')
+        # mycursor.execute('SELECT from_time, to_time, status, relay FROM automatic_jobs')
+        mycursor.execute('SELECT from_time, to_time, status, relay, JOB_ID FROM automatic_jobs')
         jobs_original = mycursor.fetchall()
         # mydatabase.close()
         run_once = 1
 
     # print("Current run_once value running after if condition=", run_once)
-    mycursor.execute('SELECT from_time, to_time, status, relay FROM automatic_jobs')
-    
+    # mycursor.execute('SELECT from_time, to_time, status, relay FROM automatic_jobs')
+
+    mycursor.execute('SELECT from_time, to_time, status, relay, JOB_ID FROM automatic_jobs')
     # print("Entered check_db_for_jobs function")
     # print(mycursor.fetchall())          #DO NOT CALL FETCHALL TWICE NOT WORK
     jobs = mycursor.fetchall()
@@ -73,12 +76,16 @@ def check_db_for_jobs():
                 print("TO TIME=",to_time)
                 relay=jobs[jobs_row-1][3]                    # jobs[jobs_row-1][3] gives which relay to on/off
                 print("Relay=",relay)
+                job_id=jobs[jobs_row-1][4]
+                job_id=str(job_id)
+                print("job_id=",job_id)
 
-                schedule.every().day.at(from_time).do(pin_on, relay)
-                print("(CALLED FROM ON CONDITION)SHEDULED JOB to pin_on function from_time=",from_time)
+                schedule.every().day.at(from_time).do(pin_on_to_off, relay,to_time,job_id).tag(job_id)
+                # schedule.every().day.at(from_time).do(pin_on_to_off, relay,to_time,job_id).tag('delete')
+                print("(CALLED FROM ON CONDITION)SHEDULED JOB to pin_on_to_off function from_time=",from_time)
 
-                schedule.every().day.at(to_time).do(pin_off, relay)
-                print("(CALLED FROM ON CONDITION)SHEDULED JOB to pin_off function to_time=",to_time)
+                # schedule.every().day.at(to_time).do(pin_off, relay)
+                # print("(CALLED FROM ON CONDITION)SHEDULED JOB to pin_off function to_time=",to_time)
 
                 # while True:
                 #     schedule.run_pending()
@@ -92,13 +99,16 @@ def check_db_for_jobs():
                 to_time=jobs[jobs_row-1][1]
                 print("TO TIME=",to_time)
                 relay=jobs[jobs_row-1][3]
-                print("Relay=",relay)    
+                print("Relay=",relay)
+                job_id=jobs[jobs_row-1][4]
+                job_id=str(job_id)
+                print("job_id=",job_id)    
 
-                schedule.every().day.at(from_time).do(pin_off, relay)
-                print("(CALLED FROM OFF CONDITION)SHEDULED JOB to pin_off function from_time=",from_time)
+                schedule.every().day.at(from_time).do(pin_off_to_on, relay,to_time,job_id).tag(job_id)
+                print("(CALLED FROM OFF CONDITION)SHEDULED JOB to pin_off_to_on function from_time=",from_time)
 
-                schedule.every().day.at(to_time).do(pin_on, relay)
-                print("(CALLED FROM OFF CONDITION)SHEDULED JOB to pin_on function to_time=",to_time)
+                # schedule.every().day.at(to_time).do(pin_on, relay)
+                # print("(CALLED FROM OFF CONDITION)SHEDULED JOB to pin_on function to_time=",to_time)
 
                 # while True:
                 #     schedule.run_pending()
@@ -107,7 +117,11 @@ def check_db_for_jobs():
         
         if jobs_original_row > jobs_row:                #this means that a  row has been deleted that is a  job has been removed by the user
             print("A  JOB HAS BEEN DELETED!!!")
-
+            globals.job_id_to_delete=str(globals.job_id_to_delete)
+            print("ID of job that is deleted=",globals.job_id_to_delete)  #the variable job_id from just above if condition is not the wanted job_id because it always returns the job that is always at the bottom of the row in table automati_jobs
+            
+            schedule.clear(globals.job_id_to_delete)
+            # schedule.clear('delete')
 
         jobs_original=jobs                                                               # database table changes such as add or removing a row
 
@@ -136,13 +150,15 @@ app.register_blueprint(admin,url_prefix='/admin')
 app.secret_key = os.urandom(12)
 
 
-def shedule_function():
+def shedule_function():                                             #this shedule_funcion is a threaded function
     global run_once
     global jobs_original_row
     global jobs_row
     global auth_code
     auth_code="4LrnMs0PkPlgyC6GDKrzBJYLdDZDjmfi"
     run_once = 0
+    print("Calling the shedule_jobs_on_startup function")
+    shedule_jobs_on_startup()
     print("Entered the shedule_fn")                                #this function is used to execute the functon check_db_for_jobs as a thread
     schedule.every(3).seconds.do(check_db_for_jobs)
 
@@ -182,6 +198,66 @@ def pin_off(relay):
     url="http://blynk-cloud.com/%s/update/%s?value=1"%(auth_code,relay)
     print("URL=",url)
     response = requests.get(url)
+
+def pin_off_to_on(relay,to_time,job_id):
+    pin_off(relay)
+    schedule.every().day.at(to_time).do(pin_on, relay).tag(job_id)
+    print("function pin_off_to_on called and pin_on function is sheduled on:%s with job_id:%s",to_time,job_id)
+
+def pin_on_to_off(relay,to_time,job_id):
+    pin_on(relay)
+    schedule.every().day.at(to_time).do(pin_off, relay).tag(job_id)
+    print("function pin_on_to_off called and pin_off function is sheduled on:%s with job_id:%s",to_time,job_id)
+
+
+def shedule_jobs_on_startup():
+    mydatabase = mysql.connector.connect(
+    	host = 'localhost', user = 'root',
+    	passwd = '', database = 'smart_switch')
+	
+    mycursor = mydatabase.cursor()
+    mycursor.execute('SELECT from_time, to_time, status, relay, JOB_ID FROM automatic_jobs')
+    jobs_on_startup = mycursor.fetchall()
+    mydatabase.close()
+
+    for x in jobs_on_startup:
+        # print(x)
+        # print(x[2])
+        if x[2] == 'ON':                  # jobs[jobs_row-1][2] gives to on or off the relay from 'from time' to 'to_time'
+
+            print("Entered ON condition on startup")
+            from_time=x[0]                # x[0] gives from_time
+            print("FROM TIME=",from_time)
+            to_time=x[1]                  # x[1] gives to_time
+            print("TO TIME=",to_time)
+            relay=x[3]                    # x[3] gives which relay to on/off
+            print("Relay=",relay)
+            job_id=str(x[4])
+            print("job_id=",job_id)
+
+            schedule.every().day.at(from_time).do(pin_on_to_off, relay,to_time,job_id).tag(job_id)
+            # print(schedule.every().day.at(from_time).do(pin_on_to_off, relay,to_time,job_id).tag(job_id))
+            print("CALLED FROM ON CONDITION from startup SHEDULED JOB to pin_on_to_off function from_time=",from_time)
+
+        if x[2] == 'OFF':
+
+            print("Entered ON condition on startup")
+            from_time=x[0]                # x[0] gives from_time
+            print("FROM TIME=",from_time)
+            to_time=x[1]                  # x[1] gives to_time
+            print("TO TIME=",to_time)
+            relay=x[3]                    # x[3] gives which relay to on/off
+            print("Relay=",relay)
+            job_id=str(x[4])
+            print("job_id=",job_id)  
+
+            schedule.every().day.at(from_time).do(pin_off_to_on, relay,to_time,job_id).tag(job_id)
+            print("CALLED FROM OFF CONDITION from startup SHEDULED JOB to pin_off_to_on function from_time=",from_time)
+
+        
+
+
+
 
 
 t = threading.Thread(target=shedule_function)
