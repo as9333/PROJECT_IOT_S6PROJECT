@@ -1,4 +1,5 @@
 {% include 'publicheader.html' %}
+{% include 'css_textbox.html' %}
 <!DOCTYPE html>
 <html>
 	<head>
@@ -113,6 +114,26 @@
 		<br>
 		<form method="POST" enctype="multipart/form-data">
 			<center>
+
+			
+				<!-- <input VALUE="" type="text" id="current" disabled="disabled"><label><h3>:</h3></label>
+				<input VALUE="" type="text" id="voltage" disabled="disabled"><label><h3>VOLTAGE:</h3></label> -->
+
+				<div class="row">
+					
+					<span>
+					  
+						<label style="color:white" for="name">CURRENT:</label><input class="basic-slide" id="current" disabled="disabled" type="text"  />
+					</span>
+					
+					<span>
+					   
+						<label style="color:white" for="name">VOLTAGE:</label><input class="basic-slide" id="voltage" disabled="disabled" type="text"  />
+					</span>
+					
+
+				</div>
+			
 		
 				<table>
 				
@@ -338,6 +359,48 @@
 								console.log(btn_status)
 								
 							}
+
+							function check_current()
+							{	
+								console.log("Entered check_current")
+								var request = new XMLHttpRequest()
+
+								var current_url = "http://blynk-cloud.com/"+auth_code+"/get/V2";
+								request.open('GET', current_url, false)
+								//request.send()
+								request.onload = function() 
+								{
+  									// Begin accessing JSON data here
+  									var current_data = JSON.parse(this.response)
+									console.log("Current:"+current_data)
+									document.getElementById("current").value = current_data;
+								}
+								
+								request.send()
+								check_voltage()
+
+								
+							}
+
+							function check_voltage()
+							{	
+								console.log("Entered check_voltage")
+								var request = new XMLHttpRequest()
+
+								var voltage_url = "http://blynk-cloud.com/"+auth_code+"/get/V1";
+								request.open('GET', voltage_url, false)
+								
+								request.onload = function() 
+								{
+									var voltage_data = JSON.parse(this.response)
+									console.log("Voltage:"+voltage_data)
+									document.getElementById("voltage").value = voltage_data;
+								}
+
+								request.send()
+								setTimeout(check_current, 5000);
+							}
+
 							
 							function checkonoff(pin_to_check)   //this function checks wheather the given pin is onn or off and also assign status to buttons
 							{
@@ -494,6 +557,7 @@
 										{
 											//document.write("<center><h1>Device is ONLINE</h1></center>");
 											window.alert("Device is ONLINE");
+											check_current()
 											
 										}
 							}	 
